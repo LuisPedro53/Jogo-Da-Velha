@@ -15,6 +15,10 @@ h1 {
   margin: 0 10px;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 /* Jogo */
 
 #container {
@@ -86,9 +90,9 @@ h1 {
 
 /* Classe de Esconder */
 
-/* .hide {
+.hide {
   display: none !important;
-} */
+}
 
 /* Placar */
 
@@ -121,7 +125,7 @@ h1 {
 
 /* Mensagem */
 
-/* #message p {
+#message p {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
@@ -133,4 +137,4 @@ h1 {
   background-color: black;
   color: white;
   padding: 20px;
-} */
+}
