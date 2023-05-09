@@ -26,9 +26,9 @@ for (let i = 0; i < boxes.length; i++) {
       //computador jogada
       if (player1 == player2) {
         player1++
-        if (secondPlayer == 'ai-player') {
-          computerplayer();
+        if (secondPlayer == 'ai-player') { 
           player2++
+          computerplayer();
         }
 
       } else {
@@ -47,6 +47,7 @@ function computerplayer() {
     let cloneO = o.cloneNode(true);
     counter = 0;
     filled = 0;
+
 
     for (let i = 0; i < boxes.length; i++) {
       let randomNumber = Math.floor(Math.random() * 5);
@@ -67,8 +68,6 @@ function computerplayer() {
       computerplayer();
     }
   }, 350);
-
-
 }
 
 function check(player1, player2) {
