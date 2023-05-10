@@ -6,6 +6,7 @@ let messageContainer = document.querySelector("#message");
 let messageText = document.querySelector("#message p");
 let btnVoltar = document.getElementById("voltar");
 let btnZerar = document.getElementById("zerar");
+let gameInProgress = true;
 
 
 //contador de jogadas
@@ -17,7 +18,7 @@ let player2 = 0;
 
 for (let i = 0; i < boxes.length; i++) {
   //quando clica na caixa
-  boxes[i].addEventListener("click", eventoBoxes )
+  boxes[i].addEventListener("click", eventoBoxes)
 }
 //evento de clique dos boxes
 function eventoBoxes() {
@@ -45,35 +46,45 @@ function eventoBoxes() {
     //checar quem venceu
     checkWinCondition();
   }
+
 }
 
 //executar logica da jogada da cpu
 function computerplayer() {
-  setTimeout(() => {
-    let cloneO = o.cloneNode(true);
-    counter = 0;
-    filled = 0;
+  if (gameInProgress) {
+    setTimeout(() => {
+      let cloneO = o.cloneNode(true);
+      counter = 0;
+      filled = 0;
+      //aqui verifica se o jogo terminou, olhando se a classe hide esta ativa 
+      // caso não esteja, e definido o gameinprogress = false, bloqueando a IA de jogar novamente
+      if (messageContainer.classList.contains("hide")) {
 
-
-    for (let i = 0; i < boxes.length; i++) {
-      let randomNumber = Math.floor(Math.random() * 5);
-      //so preenche se estivar vazio o filho
-      if (boxes[i].childNodes[0] == undefined) {
-        if (randomNumber <= 1) {
-          boxes[i].appendChild(cloneO);
-          counter++;
-          break;
+        for (let i = 0; i < boxes.length; i++) {
+          let randomNumber = Math.floor(Math.random() * 5);
+          //so preenche se estivar vazio o filho
+          if (boxes[i].childNodes[0] == undefined) {
+            if (randomNumber <= 1) {
+              boxes[i].appendChild(cloneO);
+              counter++;
+              break;
+            }
+            //checagem de quantas estão preenchidas
+          } else {
+            filled++
+          }
         }
-        //checagem de quantas estão preenchidas
+        if (counter == 0 && filled < 9) {
+          computerplayer();
+        }
+        checkWinCondition();
       } else {
-        filled++
+        gameInProgress = false;
       }
-    }
+    }, 350);
 
-    if (counter == 0 && filled < 9) {
-      computerplayer();
-    }
-  }, 350);
+  }
+
 }
 
 function check(player1, player2) {
@@ -104,8 +115,10 @@ function checkWinCondition() {
 
     if (b1Child == 'x' && b2Child == 'x' && b3Child == 'x') {
       declareWinner('x')
+
     } else if (b1Child == 'o' && b2Child == 'o' && b3Child == 'o') {
       declareWinner('o')
+
     }
   }
 
@@ -209,6 +222,7 @@ function checkWinCondition() {
 }
 
 function declareWinner(winner) {
+
   let scoreboardx = document.querySelector("#scoreboard-1");
   let scoreboardy = document.querySelector("#scoreboard-2");
   let msg = '';
@@ -216,12 +230,16 @@ function declareWinner(winner) {
   if (winner == 'x') {
     scoreboardx.textContent = parseInt(scoreboardx.textContent) + 1;
     msg = 'O jogador 1 venceu!';
+
   } else if (winner == 'o') {
     scoreboardy.textContent = parseInt(scoreboardy.textContent) + 1;
     msg = 'O jogador 2 venceu!';
+
   } else {
     msg = 'Deu velha!'
+
   }
+
 
   // exibe mensagem
   messageText.innerHTML = msg;
@@ -229,13 +247,13 @@ function declareWinner(winner) {
 
   for (let i = 0; i < boxes.length; i++) {
     //quando clica na caixa
-    boxes[i].removeEventListener("click", eventoBoxes )
+    boxes[i].removeEventListener("click", eventoBoxes);
   }
 
   let voltar = document.querySelector("#voltar-container");
   voltar.classList.add("hide");
 
-  
+
   //esconde mensagem
   setTimeout(function () {
     messageContainer.classList.add("hide");
@@ -250,10 +268,12 @@ function declareWinner(winner) {
 
     for (let i = 0; i < boxes.length; i++) {
       //quando clica na caixa
-      boxes[i].addEventListener("click", eventoBoxes )
+      boxes[i].addEventListener("click", eventoBoxes)
     }
-    
+
     voltar.classList.remove("hide");
+    gameInProgress = true;
+
   }, 3000);
 }
 
