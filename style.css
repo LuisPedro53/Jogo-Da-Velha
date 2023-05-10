@@ -13,12 +13,35 @@ h1 {
   border: none;
   padding: 10px 15px;
   margin: 0 10px;
+  border-radius: 10%;
 }
+
 
 button:hover {
   cursor: pointer;
 }
 
+
+
+#voltar{
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  margin-top: 0.8rem;
+  width: 100px;
+  border-radius: 10%;
+  
+}
+
+#zerar{
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  margin-top: 0.8rem;
+  width: 110px;
+  border-radius: 10%;
+  
+}
 /* Jogo */
 
 #container {
@@ -98,7 +121,7 @@ button:hover {
 
 #scoreboard-container {
   font-weight: bold;
-  margin-top: 30px;
+  /* margin-top: 30px; */
   font-size: 25px;
   position: relative;
   margin-left: auto;

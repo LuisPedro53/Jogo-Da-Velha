@@ -4,6 +4,9 @@ let boxes = document.querySelectorAll(".box");
 let buttons = document.querySelectorAll("#buttons-container button");
 let messageContainer = document.querySelector("#message");
 let messageText = document.querySelector("#message p");
+let btnVoltar = document.getElementById("voltar");
+let btnZerar = document.getElementById("zerar");
+
 
 //contador de jogadas
 
@@ -14,31 +17,34 @@ let player2 = 0;
 
 for (let i = 0; i < boxes.length; i++) {
   //quando clica na caixa
-  boxes[i].addEventListener("click", function () {
-    let el = check(player1, player2);
+  boxes[i].addEventListener("click", eventoBoxes )
+}
+//evento de clique dos boxes
+function eventoBoxes() {
 
-    //verifica se ja tem x ou o
-    if (this.childNodes.length == 0) {
-      //clona o elemento para pode usa dps em outros boxes
-      let cloneEl = el.cloneNode(true);
-      this.appendChild(cloneEl);
+  let el = check(player1, player2);
 
-      //computador jogada
-      if (player1 == player2) {
-        player1++
-        if (secondPlayer == 'ai-player') { 
-          player2++
-          computerplayer();
-        }
+  //verifica se ja tem x ou o
+  if (this.childNodes.length == 0) {
+    //clona o elemento para pode usa dps em outros boxes
+    let cloneEl = el.cloneNode(true);
+    this.appendChild(cloneEl);
 
-      } else {
+    //computador jogada
+    if (player1 == player2) {
+      player1++
+      if (secondPlayer == 'ai-player') {
         player2++
+        computerplayer();
       }
 
-      //checar quem venceu
-      checkWinCondition();
+    } else {
+      player2++
     }
-  })
+
+    //checar quem venceu
+    checkWinCondition();
+  }
 }
 
 //executar logica da jogada da cpu
@@ -217,10 +223,19 @@ function declareWinner(winner) {
     msg = 'Deu velha!'
   }
 
-  // exibe mensabem
+  // exibe mensagem
   messageText.innerHTML = msg;
   messageContainer.classList.remove("hide");
 
+  for (let i = 0; i < boxes.length; i++) {
+    //quando clica na caixa
+    boxes[i].removeEventListener("click", eventoBoxes )
+  }
+
+  let voltar = document.querySelector("#voltar-container");
+  voltar.classList.add("hide");
+
+  
   //esconde mensagem
   setTimeout(function () {
     messageContainer.classList.add("hide");
@@ -232,6 +247,13 @@ function declareWinner(winner) {
     for (let i = 0; i < boxToRemove.length; i++) {
       boxToRemove[i].parentNode.removeChild(boxToRemove[i]);
     }
+
+    for (let i = 0; i < boxes.length; i++) {
+      //quando clica na caixa
+      boxes[i].addEventListener("click", eventoBoxes )
+    }
+    
+    voltar.classList.remove("hide");
   }, 3000);
 }
 
@@ -240,12 +262,59 @@ for (let i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener("click", function () {
     secondPlayer = this.getAttribute("id");
 
-    for (let j = 0; j < buttons.length; j++) {
-      buttons[j].style.display = "none";
-    }
+    // for (let j = 0; j < buttons.length; j++) {
+    //   buttons[j].style.display = "none";
+    // }
+    let container = document.querySelector("#buttons-container");
+    container.classList.add("hide");
+
     setTimeout(() => {
       let container = document.querySelector("#container");
       container.classList.remove("hide");
+
+      let voltar = document.querySelector("#voltar-container");
+      voltar.classList.remove("hide");
     }, 300);
   });
 }
+
+
+
+btnVoltar.addEventListener("click", function () {
+
+  zerarJogadas();
+  let container = document.querySelector("#container");
+  container.classList.add("hide");
+
+  let voltar = document.querySelector("#voltar-container");
+  voltar.classList.add("hide");
+
+  let voltarBotoes = document.querySelector("#buttons-container");
+  voltarBotoes.classList.remove("hide");
+});
+
+
+btnZerar.addEventListener("click", function () {
+  zerarJogadas();
+});
+
+function zerarJogadas() {
+  player1 = 0;
+  player2 = 0;
+  let boxToRemove = document.querySelectorAll(".box div");
+  for (let i = 0; i < boxToRemove.length; i++) {
+    boxToRemove[i].parentNode.removeChild(boxToRemove[i]);
+  }
+
+  let scoreboardx = document.querySelector("#scoreboard-1");
+  let scoreboardy = document.querySelector("#scoreboard-2");
+
+  scoreboardx.textContent = "0";
+  scoreboardy.textContent = "0";
+}
+
+
+
+
+
+
