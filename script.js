@@ -23,6 +23,7 @@ for (let i = 0; i < boxes.length; i++) {
 }
 //evento de clique dos boxes
 function eventoBoxes() {
+
   let el = check(player1, player2);
 
   //verifica se ja tem x ou o
