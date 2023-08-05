@@ -1,5 +1,6 @@
 //Teste
 //Teste2
+//Teste3
 let x = document.querySelector(".x");
 let o = document.querySelector(".o");
 let boxes = document.querySelectorAll(".box");
@@ -23,7 +24,6 @@ for (let i = 0; i < boxes.length; i++) {
 }
 //evento de clique dos boxes
 function eventoBoxes() {
-
   let el = check(player1, player2);
 
   //verifica se ja tem x ou o
